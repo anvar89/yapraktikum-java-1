@@ -7,26 +7,57 @@ public class StepTracker {
 
     public StepTracker() {
         monthData = new MonthData[12];
-        for (MonthData m : monthData) {
-            m = new MonthData();
+        for (int i = 0; i < monthData.length; i++) {
+            monthData[i] = new MonthData();
         }
     }
 
+    public void setGoalOfDay(int number) {
+        if (number > 0) {
+            goalOfDay = number;
+            System.out.println("Количество шагов для цели дня изменено!");
+        }
+        else {
+            System.out.println("Количество шагов для цели дня должно быть больше ноля!");
+        }
+    }
+    public void setStepsPerDay(int month, int day, int steps) {
+
+        if (month >= 1 && month <= 12) {
+            if (day >= 1 && day <= 30) {
+                if (steps > 0) {
+                    monthData[month - 1].stepsPerDay[day - 1] = steps;
+                    System.out.println("Значение изменено!");
+                } else {
+                    System.out.println("Количество шагов должно быть больше ноля! Значение не изменено");
+                }
+            } else {
+                System.out.println("Не верно указан день месяца! Значение не изменено");
+            }
+        } else {
+            System.out.println("Не верно указан месяц! Значение не изменено");
+        }
+    }
+
+    // Вывод кол-ва шагов по дням
+    public void printStatistics(int month) {
+        if (month >= 1 && month <= 12) {
+            for (int i = 0; i < monthData[month - 1].stepsPerDay.length; i++) {
+                System.out.print((i + 1) + " день: " + monthData[month - 1].stepsPerDay[i] + ", ");
+            }
+        } else {
+            System.out.println("Неправильно выбран месяц!");
+        }
+    }
 
     class MonthData {
 
-        int[] stepsPerDay;
+        private int[] stepsPerDay;
 
         MonthData() {
             stepsPerDay = new int[30];
         }
 
-        // Вывод кол-ва шагов по дням
-        public void printStatistics() {
-            for (int i : stepsPerDay) {
-                System.out.print((i + 1) + " день: " + stepsPerDay[i] + ", ");
-            }
-        }
 
         // Кол-во шагов за месяц
         public int getStepsPerMonth() {
